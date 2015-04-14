@@ -3,6 +3,7 @@
 (electric-pair-mode 1)
 (column-number-mode 1)
 
+;; Mac specifics
 (setq mac-option-key-is-meta nil)
 (setq mac-command-key-is-meta t)
 (setq mac-command-modifier 'meta)
@@ -154,6 +155,7 @@
         (when (or (< arg 0) (not (eobp)))
           (transpose-lines arg))
         (forward-line -1))
+      (if (< arg 0) (forward-line -1))  ;; Fixed for Mac specifcs
       (move-to-column column t))))
 )
 
