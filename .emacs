@@ -4,11 +4,13 @@
 (column-number-mode 1)
 
 ;; Mac specifics
-(setq mac-option-key-is-meta nil)
-(setq mac-command-key-is-meta t)
 (setq mac-command-modifier 'meta)
-(setq mac-option-modifier nil)
+(setq mac-option-modifier 'alt)
+(set-face-attribute 'default nil :height 135)
+(set-frame-parameter nil 'fullscreen 'fullboth)
 
+(scroll-bar-mode -1)
+(setq-default indent-tabs-mode nil)
 (setq display-time-day-and-date 't)
 (setq display-time-24hr-format 't)
 (display-time)
@@ -25,21 +27,7 @@
 ;; (setq confirm-kill-emacs 'yes-or-no-p)
 ;; (setq c-basic-offset 4)
 
-;; Org-mode Setup
-;; (add-to-list 'load-path "/home/wsc/Templates/org-mode") 
-;; (require 'org)                                   
-;; (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-;; (define-key global-map "\C-cl" 'org-store-link)
-;; (define-key global-map "\C-ca" 'org-agenda)
-;; (setq org-log-done t)
-	
-;; Load auto-compelete // somehow doesn't work for now //
-;; (add-to-list 'load-path "~/.emacs.d")
-;; (require 'auto-complete-config)
-;; (ac-config-default)
-
 ;; Functions and Keys to make life easier
-;; (global-set-key (kbd "M-j") "\C-e \C-j")
 
 (defun duplicate-line()
   (interactive)
@@ -175,8 +163,8 @@
 
 (provide 'move-text)
 
-(global-set-key (kbd "M-p") 'move-text-up)
-(global-set-key (kbd "M-n") 'move-text-down)
+(global-set-key (kbd "M-P") 'move-text-up)
+(global-set-key (kbd "M-N") 'move-text-down)
 
 
 ;; Special cases
@@ -255,3 +243,18 @@
 ;;   "Tested with v0.6.1. Extracted from `yas/expand-1'"
 ;;   (first (yas/current-key))
 ;; ) 
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ (when (display-graphic-p)
+   '(custom-enabled-themes (quote (deeper-blue))))
+)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+)
