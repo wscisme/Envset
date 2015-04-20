@@ -6,10 +6,10 @@
 ;; Mac specifics
 (setq mac-command-modifier 'meta)
 (setq mac-option-modifier 'alt)
-(set-face-attribute 'default nil :height 135)
+(set-face-attribute 'default nil :height 130)
 (set-frame-parameter nil 'fullscreen 'fullboth)
 
-(scroll-bar-mode -1)
+
 (setq-default indent-tabs-mode nil)
 (setq display-time-day-and-date 't)
 (setq display-time-24hr-format 't)
@@ -17,6 +17,8 @@
 
 (when (not (display-graphic-p))
   (menu-bar-mode -1))
+(when  (display-graphic-p)
+  (scroll-bar-mode -1))
 
 (add-hook 'after-init-hook 'global-company-mode)
 (global-set-key (kbd "M-I") 'tab-to-tab-stop)     ;; Move original M-i to M-I
@@ -143,7 +145,7 @@
         (when (or (< arg 0) (not (eobp)))
           (transpose-lines arg))
         (forward-line -1))
-      (if (< arg 0) (forward-line -1))  ;; Fixed for Mac specifcs
+      (if (< arg 0) (forward-line -1))  ;; Fixed for Emacs 24.5 ?
       (move-to-column column t))))
 )
 

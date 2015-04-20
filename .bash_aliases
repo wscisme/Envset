@@ -1,8 +1,9 @@
+alias ls='ls -G'
 alias lt='ls -ltrh'
 alias la='ls -a'
 alias lta='ls -ltrha'
 
-alias em='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
+alias em='emacs -nw'
 
 alias ipynb='ipython notebook'
 
@@ -36,6 +37,6 @@ mkpdf(){
     local LATEXFILENAME="$FILENAME.tex"
     local PDFFILENAME="$FILENAME.pdf"
 
-    pdflatex $LATEXFILENAME && evince $PDFFILENAME 
+    pdflatex $LATEXFILENAME && open $PDFFILENAME 
 
 }
