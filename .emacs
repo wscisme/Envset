@@ -2,12 +2,14 @@
 (show-paren-mode 1)
 (electric-pair-mode 1)
 (column-number-mode 1)
+(ido-mode 1)
 
 ;; Mac specifics
 (setq mac-command-modifier 'meta)
 (setq mac-option-modifier 'alt)
 (set-face-attribute 'default nil :height 130)
 (set-frame-parameter nil 'fullscreen 'fullboth)
+(global-set-key (kbd "A-SPC") 'just-one-space)
 
 
 (setq-default indent-tabs-mode nil)
@@ -20,10 +22,43 @@
 (when  (display-graphic-p)
   (scroll-bar-mode -1))
 
+;; Setup Company mode
 (add-hook 'after-init-hook 'global-company-mode)
 (global-set-key (kbd "M-I") 'tab-to-tab-stop)     ;; Move original M-i to M-I
 (global-set-key (kbd "M-i") 'company-complete)
-;; (global-set-key (kbd "C-i") 'indent-for-tab-command)
+
+;; Setup iBuffer
+(setq ibuffer-saved-filter-groups
+  (quote (("default"      
+            ;; ("lxplus"
+            ;;   (name . "^*cern.ch*$"))
+            ;; ("uaf"
+            ;;   (name . "^*uaf*$"))
+            ("Programming" ;; prog stuff not already in MyProjectX
+              (or
+                (mode . c-mode)
+                (mode . c++-mode)
+                (mode . perl-mode)
+                (mode . python-mode)
+                (mode . emacs-lisp-mode)
+                ;; etc
+                ))
+            ("Org" ;; all org-related buffers
+              (mode . org-mode))  
+            ("LaTeX" ;; all LaTeX-related buffers
+              (mode . latex-mode))  
+            ;; ("Emacs" (or
+            ;;           (name . "^\\*scratch\\*$")
+            ;;           (name . "^*.emacs*$")
+            ;;           (name . "^\\*Messages\\*$")
+            ;;           (name . "^\\*Completions\\*$")))
+            ))))
+
+(add-hook 'ibuffer-mode-hook
+  (lambda ()
+    (ibuffer-switch-to-saved-filter-groups "default")))
+
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; Trials
 ;; (setq confirm-kill-emacs 'yes-or-no-p)
@@ -62,7 +97,7 @@
 (global-set-key (kbd "C-M-j") 'duplicate-current-line-or-region)
 (global-set-key (kbd "C-c C-d") 'duplicate-current-line-or-region)
 
-;; when you do not have a text selection, copy will just copy the current line. Similar for cut. 
+;; when you do not have a text selection, select the whole current line. 
 (defadvice kill-ring-save (before slick-copy activate compile)
   "When called interactively with no active region, copy the current line."
   (interactive
