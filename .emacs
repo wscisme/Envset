@@ -19,6 +19,7 @@
 (when (not (display-graphic-p))
   (menu-bar-mode -1))
 (when  (display-graphic-p)
+  (setq confirm-kill-emacs 'yes-or-no-p)
   (scroll-bar-mode -1))
 
 ;; Setup Company mode
@@ -60,7 +61,6 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; Trials
-(setq confirm-kill-emacs 'yes-or-no-p)
 ;; (setq c-basic-offset 4)
 
 ;; longer history
