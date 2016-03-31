@@ -30,6 +30,20 @@
 (global-set-key (kbd "C-M-j") 'prelude-duplicate-current-line-or-region)
 (global-set-key (kbd "C-s-j") 'prelude-duplicate-and-comment-current-line-or-region)
 
+;; ---- Key-chrods ----
+(key-chord-define-global "OO" 'other-window)
+(key-chord-define-global "BB" 'ido-switch-buffer)
+(key-chord-define c++-mode-map ";;"  "\C-e;")
+;; (key-chord-define latex-mode-map "{}"  "{}\C-b")
+
+;; ---- Multiple-cursors ----
+(require 'multiple-cursors)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+(global-set-key (kbd "C-M-<mouse-1>") 'mc/add-cursor-on-click)
+
 ;; --------------------------------------
 ;;  File modification required features:
 ;; --------------------------------------
