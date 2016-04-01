@@ -7,7 +7,6 @@
 (setq prelude-whitespace nil)
 (setq prelude-flyspell nil)
 (setq electric-indent-mode nil)
-;; (global-hl-line-mode -1)
 (global-set-key [remap move-beginning-of-line]
                 'move-beginning-of-line)
 
@@ -16,7 +15,8 @@
 (set-frame-parameter nil 'fullscreen 'fullboth)
 
 (when (not (display-graphic-p))
-  (menu-bar-mode -1))
+  (menu-bar-mode -1)  
+  (global-hl-line-mode -1))
 (when  (display-graphic-p)
   (setq confirm-kill-emacs 'yes-or-no-p)
   (scroll-bar-mode -1))
@@ -32,12 +32,13 @@
 (global-set-key (kbd "C-M-j") 'prelude-duplicate-current-line-or-region)
 (global-set-key (kbd "C-s-j") 'prelude-duplicate-and-comment-current-line-or-region)
 (global-set-key (kbd "s-SPC") 'just-one-space)
+(global-set-key (kbd "C-M-g") 'god-local-mode)
 
 ;; ---- Key-chords ----
 (key-chord-define-global "OO" 'other-window)
 (key-chord-define-global "KK" 'delete-window)
-(key-chord-define-global "BB" 'ido-switch-buffer)
-(key-chord-define-global "LL" (lambda()
+(key-chord-define-global "WW" 'delete-other-windows)
+(key-chord-define-global "BB" 'ido-switch-buffer) (key-chord-define-global "LL" (lambda()
                                 (interactive)
                                 (split-window-right)
                                 (other-window 1)
@@ -56,6 +57,18 @@
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 (global-set-key (kbd "C-M-<mouse-1>") 'mc/add-cursor-on-click)
+
+;; ---- God-mode ----
+(require 'god-mode-isearch)
+(define-key isearch-mode-map (kbd "C-e") 'god-mode-isearch-activate)
+(define-key god-mode-isearch-map (kbd "C-e") 'god-mode-isearch-disable)
+(defun god-mode-update-cursor ()
+    (if (or god-local-mode buffer-read-only)
+                        (set-cursor-color 'gray)
+                      (set-cursor-color 'green)))
+(add-hook 'god-mode-enabled-hook 'god-mode-update-cursor)
+(add-hook 'god-mode-disabled-hook 'god-mode-update-cursor)
+
 
 ;; --------------------------------------
 ;;  File modification required features:
