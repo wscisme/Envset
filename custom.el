@@ -5,6 +5,8 @@
 (disable-theme 'zenburn)
 ;; (setq prelude-theme 'solarized-dark)
 (setq prelude-whitespace nil)
+(setq prelude-flyspell nil)
+(setq electric-indent-mode nil)
 ;; (global-hl-line-mode -1)
 (global-set-key [remap move-beginning-of-line]
                 'move-beginning-of-line)
@@ -23,16 +25,27 @@
 (setq display-time-24hr-format 't)
 (display-time)
 
-;; ---- Change to comfortable keys ----
+;; ---- Add comfortable key bindings ----
 (global-set-key (kbd "C-\\")  'undo-tree-redo)
 (global-set-key (kbd "C-s-p") 'move-text-up)
 (global-set-key (kbd "C-s-n") 'move-text-down)
 (global-set-key (kbd "C-M-j") 'prelude-duplicate-current-line-or-region)
 (global-set-key (kbd "C-s-j") 'prelude-duplicate-and-comment-current-line-or-region)
+(global-set-key (kbd "s-SPC") 'just-one-space)
 
-;; ---- Key-chrods ----
+;; ---- Key-chords ----
 (key-chord-define-global "OO" 'other-window)
+(key-chord-define-global "KK" 'delete-window)
 (key-chord-define-global "BB" 'ido-switch-buffer)
+(key-chord-define-global "LL" (lambda()
+                                (interactive)
+                                (split-window-right)
+                                (other-window 1)
+                                (prelude-switch-to-previous-buffer)))
+(key-chord-define-global "XX" (lambda()
+                                (interactive)
+                                (kill-buffer (current-buffer))
+                                (delete-window)))
 (key-chord-define c++-mode-map ";;"  "\C-e;")
 ;; (key-chord-define latex-mode-map "{}"  "{}\C-b")
 
