@@ -38,7 +38,8 @@
 (key-chord-define-global "OO" 'other-window)
 (key-chord-define-global "KK" 'delete-window)
 (key-chord-define-global "WW" 'delete-other-windows)
-(key-chord-define-global "BB" 'ido-switch-buffer) (key-chord-define-global "LL" (lambda()
+(key-chord-define-global "BB" 'ido-switch-buffer) 
+(key-chord-define-global "LL" (lambda()
                                 (interactive)
                                 (split-window-right)
                                 (other-window 1)
@@ -59,16 +60,17 @@
 (global-set-key (kbd "C-M-<mouse-1>") 'mc/add-cursor-on-click)
 
 ;; ---- God-mode ----
+(require 'god-mode)
+(define-key god-local-mode-map (kbd ".") 'repeat)
+(define-key god-local-mode-map (kbd "i") 'god-local-mode)
 (require 'god-mode-isearch)
-(define-key isearch-mode-map (kbd "C-e") 'god-mode-isearch-activate)
-(define-key god-mode-isearch-map (kbd "C-e") 'god-mode-isearch-disable)
-(defun god-mode-update-cursor ()
-    (if (or god-local-mode buffer-read-only)
-                        (set-cursor-color 'gray)
-                      (set-cursor-color 'green)))
-(add-hook 'god-mode-enabled-hook 'god-mode-update-cursor)
-(add-hook 'god-mode-disabled-hook 'god-mode-update-cursor)
-
+(define-key isearch-mode-map (kbd "M-a") 'god-mode-isearch-activate)
+(define-key god-mode-isearch-map (kbd "M-a") 'god-mode-isearch-disable)
+(defun update-cursor-color ()
+  (set-cursor-color (if (or god-local-mode buffer-read-only)
+                        'gray
+                      'green)))                    ;; theme specific
+(add-hook 'post-command-hook 'update-cursor-color) ;; potential problem?
 
 ;; --------------------------------------
 ;;  File modification required features:
