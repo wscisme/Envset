@@ -66,11 +66,12 @@
 (require 'god-mode-isearch)
 (define-key isearch-mode-map (kbd "M-a") 'god-mode-isearch-activate)
 (define-key god-mode-isearch-map (kbd "M-a") 'god-mode-isearch-disable)
-(defun update-cursor-color ()
-  (set-cursor-color (if (or god-local-mode buffer-read-only)
-                        'gray
-                      'green)))                    ;; theme specific
-(add-hook 'post-command-hook 'update-cursor-color) ;; potential problem?
+(defun god-mode-update-cursor ()
+  (setq cursor-type (if (or god-local-mode buffer-read-only)
+                        '(bar . 3)
+                      'box)))
+(add-hook 'god-mode-enabled-hook 'god-mode-update-cursor)
+(add-hook 'god-mode-disabled-hook 'god-mode-update-cursor)
 
 ;; --------------------------------------
 ;;  File modification required features:
