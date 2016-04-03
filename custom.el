@@ -7,6 +7,7 @@
 (setq prelude-whitespace nil)
 (setq prelude-flyspell nil)
 (setq electric-indent-mode nil)
+(setq prelude-auto-save nil)
 (global-set-key [remap move-beginning-of-line]
                 'move-beginning-of-line)
 
@@ -32,7 +33,7 @@
 (global-set-key (kbd "C-M-j") 'prelude-duplicate-current-line-or-region)
 (global-set-key (kbd "C-s-j") 'prelude-duplicate-and-comment-current-line-or-region)
 (global-set-key (kbd "s-SPC") 'just-one-space)
-(global-set-key (kbd "C-M-g") 'god-local-mode)
+(global-set-key (kbd "C-;")   'god-local-mode)
 
 ;; ---- Key-chords ----
 (key-chord-define-global "OO" 'other-window)
@@ -72,6 +73,7 @@
                       'box)))
 (add-hook 'god-mode-enabled-hook 'god-mode-update-cursor)
 (add-hook 'god-mode-disabled-hook 'god-mode-update-cursor)
+
 
 ;; --------------------------------------
 ;;  File modification required features:
