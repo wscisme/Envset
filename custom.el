@@ -1,3 +1,8 @@
+;; --------------------------------------
+;; This file is based on Emacs Prelude at https://github.com/bbatsov/prelude
+;; To be put at ~/.emacs.d/personal/
+;; --------------------------------------
+
 (setq mac-command-modifier 'meta)
 (setq mac-option-modifier 'super)
 
@@ -26,6 +31,18 @@
 (setq display-time-24hr-format 't)
 (display-time)
 
+;; ---- Additional functions ----
+(defun comment-dwim-line (&optional arg)
+  "Replacement for the comment-dwim command.
+   If no region is selected and current line is not blank and we are not at the end of the line,
+   then comment current line.
+   Replaces default behaviour of comment-dwim, when it inserts comment at the end of the line."
+  (interactive "*P")
+  (comment-normalize-vars)
+  (if (and (not (region-active-p)) (not (looking-at "[ \t]*$")))
+      (comment-or-uncomment-region (line-beginning-position) (line-end-position))
+    (comment-dwim arg)))
+
 ;; ---- Add comfortable key bindings ----
 (global-set-key (kbd "C-\\")  'undo-tree-redo)
 (global-set-key (kbd "C-s-p") 'move-text-up)
@@ -49,7 +66,7 @@
                                 (interactive)
                                 (kill-buffer (current-buffer))
                                 (delete-window)))
-(key-chord-define c++-mode-map ";;"  "\C-e;")
+(key-chord-define-global ";;"  'comment-dwim-line)
 ;; (key-chord-define latex-mode-map "{}"  "{}\C-b")
 
 ;; ---- Multiple-cursors ----
