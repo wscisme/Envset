@@ -31,6 +31,10 @@
 (setq display-time-24hr-format 't)
 (display-time)
 
+;; ---- File type recognition ----
+(add-to-list 'auto-mode-alist '(".bash_aliases" . shell-script-mode))
+(setq auto-mode-alist (cons (cons "\\.h\\'" 'c++-mode) auto-mode-alist))
+
 ;; ---- Additional functions ----
 (defun comment-dwim-line (&optional arg)
   "Replacement for the comment-dwim command.
