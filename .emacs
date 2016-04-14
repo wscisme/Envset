@@ -2,14 +2,14 @@
 (show-paren-mode 1)
 (electric-pair-mode 1)
 (column-number-mode 1)
-(ido-mode 1)
+(eval-after-load 'ido (ido-mode 1))
 
 ;; Mac specifics
 (setq mac-command-modifier 'meta)
-(setq mac-option-modifier 'alt)
+(setq mac-option-modifier 'super)
 (set-face-attribute 'default nil :height 120)
 (set-frame-parameter nil 'fullscreen 'fullboth)
-(global-set-key (kbd "A-SPC") 'just-one-space)
+(global-set-key (kbd "s-SPC") 'just-one-space)
 
 (setq-default indent-tabs-mode nil)
 (setq display-time-day-and-date 't)
@@ -138,41 +138,6 @@
 	 (list beg (line-beginning-position))))))
 )
 
-;; (defun kill-region-or-whole-line (arg)
-;;   "When called interactively with no active region, cut the current line."
-;;   (interactive "p")
-;;   (if mark-active
-;;       (kill-region (point) (mark)) 
-;;     (progn
-;;       (message "Current line is cut.")
-;;       (dotimes (i arg)
-;; 	(kill-whole-line))))
-;; )
-;; (global-set-key (kbd "C-w") 'kill-region-or-whole-line)
-;; (global-set-key (kbd "M-p") 'kill-whole-line)
-
-
-;; Dangerously mapping kill whole line to M-n
-;; (global-set-key (kbd "M-n") 'kill-whole-line)
-
-;; (global-set-key (kbd "M-P") 'backward-list)
-;; (global-set-key (kbd "M-N") 'forward-list)
-
-;; (defun move-line-up() 
-;;   (interactive)
-;;   (transpose-lines 1)
-;;   (previous-line 2)
-;; )
-;; ;;(global-set-key (kbd "C-M-p") 'move-line-up)
-
-;; (defun move-line-down ()
-;;   (interactive)
-;;   (next-line 1)
-;;   (transpose-lines 1)
-;;   (previous-line 1)
-;; )
-;; ;;(global-set-key (kbd "C-M-n") 'move-line-down)
-
 (defun move-text-internal (arg)
   (cond
    ((and mark-active transient-mark-mode)
@@ -214,11 +179,8 @@
 
 (provide 'move-text)
 
-(global-set-key (kbd "M-P") 'move-text-up)
-(global-set-key (kbd "M-N") 'move-text-down)
-
-(global-set-key (kbd "A-C-p") 'move-text-up)
-(global-set-key (kbd "A-C-n") 'move-text-down)
+(global-set-key (kbd "C-s-p") 'move-text-up)
+(global-set-key (kbd "C-s-n") 'move-text-down)
 
 ;; Special cases
 (add-to-list 'auto-mode-alist '(".bash_aliases" . shell-script-mode))
@@ -319,21 +281,6 @@ Note, for the time zone offset, both the formats 「hhmm」 and 「hh:mm」 are 
 ;; Enable restricted functions
 (put 'scroll-left 'disabled nil)
 
-;; Integrate Yasnippet into company-mode
-;; (define-key company-active-map "\t" 'company-yasnippet-or-completion)
- 
-;; (defun company-yasnippet-or-completion ()
-;;   (interactive)
-;;   (if (yas/expansion-at-point)
-;;       (progn (company-abort)
-;; 	     (yas/expand))
-;;     (company-complete-common))
-;; )
- 
-;; (defun yas/expansion-at-point ()
-;;   "Tested with v0.6.1. Extracted from `yas/expand-1'"
-;;   (first (yas/current-key))
-;; ) 
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -342,6 +289,8 @@ Note, for the time zone offset, both the formats 「hhmm」 and 「hh:mm」 are 
  ;; If there is more than one, they won't work right.
  (when (display-graphic-p)
    '(custom-enabled-themes (quote (deeper-blue))))
+ (when (not (display-graphic-p))
+   '(custom-enabled-themes (quote (tango-dark))))
 )
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
