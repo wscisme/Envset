@@ -12,10 +12,9 @@
 (setq prelude-whitespace nil)
 (setq prelude-flyspell nil)
 (setq electric-indent-mode nil)
-(setq prelude-auto-save nil)
-(global-set-key [remap move-beginning-of-line]
-                'move-beginning-of-line)
-
+;; (setq prelude-auto-save nil)
+(global-set-key [remap move-beginning-of-line] 'move-beginning-of-line)
+;; (global-flycheck-mode -1)
 
 ;; ---- Wanted features ----
 (set-frame-parameter nil 'fullscreen 'fullboth)
@@ -56,7 +55,7 @@
 (global-set-key (kbd "s-SPC") 'just-one-space)
 (global-set-key (kbd "C-;")   'god-local-mode)
 
-;; ---- Additional Key-chords bindings ----
+;; ---- Additional Key-chord bindings ----
 (key-chord-define-global "OO" 'other-window)
 (key-chord-define-global "DD" 'delete-window)
 (key-chord-define-global "KK" 'delete-other-windows)
@@ -85,10 +84,10 @@
 (require 'god-mode)
 (define-key god-local-mode-map (kbd ".") 'repeat)
 (define-key god-local-mode-map (kbd "i") 'god-local-mode)
-(define-key god-local-mode-map (kbd "N") (lambda()
+(define-key god-local-mode-map (kbd "M-n") (lambda()
                                            (interactive)
                                            (next-line 5)))
-(define-key god-local-mode-map (kbd "P") (lambda()
+(define-key god-local-mode-map (kbd "M-p") (lambda()
                                            (interactive)
                                            (previous-line 5)))
 (require 'god-mode-isearch)
@@ -105,9 +104,10 @@
 ;;  File modification required features:
 ;; --------------------------------------
 ;; Mod: ~/.emacs.d/modules/prelude-c.el: 39: (c-basic-offset 2)
-;; Add: ~/.emacs.d/modules/prelude-c.el: +40: (local-unset-key (kbd "C-M-j"))
+;; Add: ~/.emacs.d/modules/prelude-c.el: 40: (local-unset-key (kbd "C-M-j"))
 ;; Mod: ~/.emacs.d/elpa/smartparens/smartparens.el: 206: ("M-D" . sp-splice-sexp)
 ;; Mod: ~/.emacs.d/elpa/god-mode/god-mode.el: 45: ("m" . "M-")
+;; Mod: ~/.emacs.d/prelude-editor.el: 171-175: ;; ...
 ;; --------------------------------------
 
 (custom-set-variables
