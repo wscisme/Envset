@@ -105,6 +105,7 @@
 (define-key company-active-map (kbd "<return>") nil)
 (define-key company-active-map (kbd "RET") nil)
 (define-key company-active-map (kbd "M-i") 'company-complete-selection)
+(add-hook 'latex-mode-hook 'smartparens-mode)
 
 ;; --------------------------------------
 ;;  File modification required features:
