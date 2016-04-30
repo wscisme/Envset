@@ -101,6 +101,11 @@
 (add-hook 'god-mode-enabled-hook 'god-mode-update-cursor)
 (add-hook 'god-mode-disabled-hook 'god-mode-update-cursor)
 
+;; ---- Other mode specific setup ----
+(define-key company-active-map (kbd "<return>") nil)
+(define-key company-active-map (kbd "RET") nil)
+(define-key company-active-map (kbd "M-i") 'company-complete-selection)
+
 ;; --------------------------------------
 ;;  File modification required features:
 ;; --------------------------------------
