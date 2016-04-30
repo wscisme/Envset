@@ -23,8 +23,9 @@
   (menu-bar-mode -1)
   (global-hl-line-mode -1))
 (when  (display-graphic-p)
+  (scroll-bar-mode -1)
   (setq confirm-kill-emacs 'yes-or-no-p)
-  (scroll-bar-mode -1))
+  (set-face-background 'hl-line "#2a2a2a"))
 
 (setq display-time-day-and-date 't)
 (setq display-time-24hr-format 't)
