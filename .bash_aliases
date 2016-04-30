@@ -4,7 +4,9 @@ alias la='ls -a'
 alias lta='ls -ltrha'
 
 alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
-alias em='/Applications/Emacs.app/Contents/MacOS/Emacs -nw -q --load ~/.shemacs'
+alias emsvr='/Applications/Emacs.app/Contents/MacOS/Emacs --daemon'
+alias em='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -t'
+alias enw='emacs -nw -q --load ~/.shemacs'
 
 alias dui='du -hc -d 1'
 
@@ -22,9 +24,8 @@ alias ..7='cd ../../../../../../..'
 
 #Functional alias
 ei() {
-    if [ -f "$1" ]
-    then
-	emacs -q "$1" --eval '(setq buffer-read-only t)'
+    if [ -f "$1" ]; then
+	enw "$1" --eval '(setq buffer-read-only t)' --eval '(god-local-mode 1)'
     else
 	echo "File $1 not found."
     fi
