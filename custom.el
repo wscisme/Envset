@@ -3,8 +3,10 @@
 ;; To be put at ~/.emacs.d/personal/
 ;; --------------------------------------
 
+;; ---- Mac specifics ----
 (setq mac-command-modifier 'meta)
 (setq mac-option-modifier 'super)
+(set-frame-parameter nil 'fullscreen 'fullboth)
 
 ;; ---- Disable uncomfortable features ----
 (disable-theme 'zenburn)
@@ -16,22 +18,19 @@
 (global-set-key [remap move-beginning-of-line] 'move-beginning-of-line)
 ;; (global-flycheck-mode -1)
 
-;; ---- Wanted features ----
-(set-frame-parameter nil 'fullscreen 'fullboth)
-
+;; ---- Additional features ----
 (when (not (display-graphic-p))
   (menu-bar-mode -1)
   (global-hl-line-mode -1))
 (when  (display-graphic-p)
   (scroll-bar-mode -1)
-  (setq confirm-kill-emacs 'yes-or-no-p)
-  (set-face-background 'hl-line "#3F3F3F"))
+  (setq confirm-kill-emacs 'yes-or-no-p))
 
 (setq display-time-day-and-date 't)
 (setq display-time-24hr-format 't)
 (display-time)
 
-;; ---- File type recognition ----
+;; ---- Additional auto-mode ----
 (add-to-list 'auto-mode-alist '(".bash_aliases" . shell-script-mode))
 (setq auto-mode-alist (cons (cons "\\.h\\'" 'c++-mode) auto-mode-alist))
 
@@ -58,19 +57,18 @@
 
 ;; ---- Additional Key-chord bindings ----
 (key-chord-define-global "OO" 'other-window)
+(key-chord-define-global "KK" 'delete-window)
 (key-chord-define-global "DD" 'delete-other-windows)
-(key-chord-define-global "BB" 'ido-switch-buffer)
 (key-chord-define-global "LL" (lambda()
                                 (interactive)
                                 (split-window-right)
                                 (other-window 1)
-                                (prelude-switch-to-previous-buffer)))
-(key-chord-define-global "KK" (lambda()
+                                (ido-switch-buffer)))
+(key-chord-define-global "XX" (lambda()
                                 (interactive)
                                 (kill-buffer (current-buffer))
                                 (delete-window)))
 (key-chord-define-global ";;" 'comment-dwim-line)
-;; (key-chord-define latex-mode-map "{}"  "{}\C-b")
 
 ;; ---- Multiple-cursors configs ----
 (require 'multiple-cursors)
@@ -85,11 +83,11 @@
 (define-key god-local-mode-map (kbd ".") 'repeat)
 (define-key god-local-mode-map (kbd "i") 'god-local-mode)
 (define-key god-local-mode-map (kbd "M-n") (lambda()
-                                           (interactive)
-                                           (next-line 5)))
+                                             (interactive)
+                                             (next-line 5)))
 (define-key god-local-mode-map (kbd "M-p") (lambda()
-                                           (interactive)
-                                           (previous-line 5)))
+                                             (interactive)
+                                             (previous-line 5)))
 (define-key god-local-mode-map [escape]  'keyboard-quit)
 (require 'god-mode-isearch)
 (define-key isearch-mode-map (kbd "M-a") 'god-mode-isearch-activate)
@@ -106,6 +104,7 @@
 (define-key company-active-map (kbd "RET") nil)
 (define-key company-active-map (kbd "M-i") 'company-complete-selection)
 (add-hook 'latex-mode-hook 'smartparens-mode)
+(set-face-background 'hl-line "#3F3F3F")
 
 ;; --------------------------------------
 ;;  File modification required features:
