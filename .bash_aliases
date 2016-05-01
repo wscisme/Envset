@@ -13,6 +13,12 @@ alias dui='du -hc -d 1'
 alias pdflatex='/Library/TeX/Distributions/Programs/texbin/pdflatex'
 alias py='python3.5'
 
+alias gst='git st'
+alias gad='git add'
+alias gcm='git cm'
+alias gam='git cam'
+alias gdf='git diff'
+
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
