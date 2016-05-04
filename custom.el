@@ -50,8 +50,8 @@
 (global-set-key (kbd "C-\\")  'undo-tree-redo)
 (global-set-key (kbd "C-s-p") 'move-text-up)
 (global-set-key (kbd "C-s-n") 'move-text-down)
-(global-set-key (kbd "C-M-j") 'prelude-duplicate-current-line-or-region)
-(global-set-key (kbd "C-s-j") 'prelude-duplicate-and-comment-current-line-or-region)
+(global-set-key (kbd "C-M-j") 'crux-duplicate-current-line-or-region)
+(global-set-key (kbd "C-s-j") 'crux-duplicate-and-comment-current-line-or-region)
 (global-set-key (kbd "s-SPC") 'just-one-space)
 (global-set-key (kbd "C-;")   'god-local-mode)
 
@@ -100,11 +100,12 @@
 (add-hook 'god-mode-disabled-hook 'god-mode-update-cursor)
 
 ;; ---- Other mode specific setup ----
+(set-face-background 'hl-line "#3F3F3F")
 (define-key company-active-map (kbd "<return>") nil)
 (define-key company-active-map (kbd "RET") nil)
 (define-key company-active-map (kbd "M-i") 'company-complete-selection)
 (add-hook 'latex-mode-hook 'smartparens-mode)
-(set-face-background 'hl-line "#3F3F3F")
+(add-hook 'latex-mode-hook (lambda() (key-chord-define latex-mode-map "==" "&=& ")))
 
 ;; --------------------------------------
 ;;  File modification required features:
@@ -113,7 +114,8 @@
 ;; Add: ~/.emacs.d/modules/prelude-c.el: 40: (local-unset-key (kbd "C-M-j"))
 ;; Mod: ~/.emacs.d/elpa/smartparens/smartparens.el: 206: ("M-D" . sp-splice-sexp)
 ;; Mod: ~/.emacs.d/elpa/god-mode/god-mode.el: 45: ("m" . "M-")
-;; Mod: ~/.emacs.d/prelude-editor.el: 171-175: ;; ...
+;; Mod: ~/.emacs.d/core/prelude-editor.el: 171-175: ;; ...
+;; Mod: ~/.emacs.d/core/prelude-mode.el: 46: ;; ...
 ;; --------------------------------------
 
 (custom-set-variables
