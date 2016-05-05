@@ -18,6 +18,10 @@
 (global-set-key [remap move-beginning-of-line] 'move-beginning-of-line)
 ;; (global-flycheck-mode -1)
 
+;; ---- Adjusted features ----
+(setq scroll-margin 2)
+(setq scroll-conservatively 5)
+
 ;; ---- Additional features ----
 (when (not (display-graphic-p))
   (menu-bar-mode -1)
