@@ -27,8 +27,14 @@ alias ..4='cd ../../../..'
 alias ..5='cd ../../../../..'
 alias ..6='cd ../../../../../..'
 alias ..7='cd ../../../../../../..'
+alias c..='cl ..'
+alias c...='cl ../..'
 
 #Functional alias
+cl() {
+    cd $1 && lt
+}
+
 ei() {
     if [ -f "$1" ]; then
 	enw "$1" --eval '(setq buffer-read-only t)' --eval '(god-local-mode 1)'
