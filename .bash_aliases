@@ -18,6 +18,7 @@ alias gad='git add'
 alias gcm='git cm'
 alias gam='git cam'
 alias gdf='git diff'
+alias gco='git co'
 
 alias ..='cd ..'
 alias ...='cd ../..'
