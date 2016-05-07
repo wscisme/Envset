@@ -15,8 +15,8 @@
 (setq prelude-flyspell nil)
 (setq electric-indent-mode nil)
 ;; (setq prelude-auto-save nil)
-(global-set-key [remap move-beginning-of-line] 'move-beginning-of-line)
 ;; (global-flycheck-mode -1)
+(remove-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
 ;; ---- Adjusted features ----
 (setq scroll-margin 2)
