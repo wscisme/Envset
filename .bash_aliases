@@ -34,7 +34,7 @@ alias c...='cl ../..'
 
 #Functional alias
 cl() {
-    cd $1 && lt
+    cd ${1-.} && lt
 }
 
 ei() {
