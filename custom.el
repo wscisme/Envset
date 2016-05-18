@@ -81,6 +81,8 @@
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 (global-set-key (kbd "C-M-<mouse-1>") 'mc/add-cursor-on-click)
+(global-set-key (kbd "C-S-c n") 'mc/insert-numbers)
+(global-set-key (kbd "C-S-c a") 'mc/insert-letters)
 
 ;; ---- God-mode configs ----
 (require 'god-mode)
