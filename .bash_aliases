@@ -9,6 +9,7 @@ alias em='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -t'
 alias enw='emacs -nw -q --load ~/.shemacs'
 
 alias dui='du -hc -d 1'
+alias grep='grep --color=auto'
 
 alias pdflatex='/Library/TeX/Distributions/Programs/texbin/pdflatex'
 alias py='python3.5'
@@ -55,5 +56,5 @@ mkpdf(){
     local LATEXFILENAME="$FILENAME.tex"
     local PDFFILENAME="$FILENAME.pdf"
 
-    pdflatex $LATEXFILENAME && open $PDFFILENAME 
+    pdflatex $LATEXFILENAME && open $PDFFILENAME
 }

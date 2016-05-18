@@ -79,10 +79,13 @@
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+(global-set-key (kbd "C-c C->") 'mc/mark-next-like-this-word)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this-dwim)
 (global-set-key (kbd "C-M-<mouse-1>") 'mc/add-cursor-on-click)
-(global-set-key (kbd "C-S-c n") 'mc/insert-numbers)
-(global-set-key (kbd "C-S-c a") 'mc/insert-letters)
+(global-set-key (kbd "C-c m n") 'mc/insert-numbers)
+(global-set-key (kbd "C-c m a") 'mc/insert-letters)
+(global-set-key (kbd "C-c m m") 'mc/unmark-next-like-this)
+(global-set-key (kbd "C-c m s") 'mc/skip-to-next-like-this)
 
 ;; ---- God-mode configs ----
 (require 'god-mode)
