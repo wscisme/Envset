@@ -3,6 +3,10 @@
 	email = ***@**.**
 [core]
 	editor = emacs
+[color]
+	branch = auto
+	status = auto
+	diff = auto
 [alias]
         co = checkout
         ci = commit
