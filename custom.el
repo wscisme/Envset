@@ -58,6 +58,9 @@
 (global-set-key (kbd "C-s-j") 'crux-duplicate-and-comment-current-line-or-region)
 (global-set-key (kbd "s-SPC") 'just-one-space)
 (global-set-key (kbd "C-;")   'god-local-mode)
+(global-set-key (kbd "M-s d d") 'ediff)
+(global-set-key (kbd "M-s d b") 'ediff-buffers)
+(global-set-key (kbd "M-s d r") 'ediff-revision)
 
 ;; ---- Additional Key-chord bindings ----
 (key-chord-define-global "OO" 'other-window)
