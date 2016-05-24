@@ -61,6 +61,8 @@
 (global-set-key (kbd "M-s d d") 'ediff)
 (global-set-key (kbd "M-s d b") 'ediff-buffers)
 (global-set-key (kbd "M-s d r") 'ediff-revision)
+(global-set-key (kbd "M-g t c") 'tramp-cleanup-connections)
+(global-set-key (kbd "M-g t a") 'tramp-cleanup-all-connections)
 
 ;; ---- Additional Key-chord bindings ----
 (key-chord-define-global "OO" 'other-window)
