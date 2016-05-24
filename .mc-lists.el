@@ -4,6 +4,7 @@
 (setq mc/cmds-to-run-for-all
       '(
         apply-operation-to-number-at-point
+        c-electric-colon
         c-electric-delete-forward
         c-electric-lt-gt
         c-electric-paren
@@ -11,20 +12,28 @@
         c-indent-line-or-region
         comment-dwim-line
         completion-at-point
+        crux-duplicate-current-line-or-region
+        crux-smart-open-line
         easy-kill
         electric-newline-and-maybe-indent
+        eval-last-sexp
         kill-region
         prelude-eval-and-replace
         sp-backward-delete-char
         sp-backward-kill-word
+        sp-backward-sexp
         sp-delete-char
         sp-forward-sexp
         sp-kill-word
         sp-splice-sexp
+        undefined
         ))
 
 (setq mc/cmds-to-run-once
       '(
+        avy-goto-word-1
         god-local-mode
+        ido-find-file
+        smex
         yank-rectangle
         ))
