@@ -58,10 +58,11 @@
 (global-set-key (kbd "C-s-j") 'crux-duplicate-and-comment-current-line-or-region)
 (global-set-key (kbd "s-SPC") 'just-one-space)
 (global-set-key (kbd "C-;")   'god-local-mode)
+(global-set-key (kbd "C-c ;") 'god-mode-all)
 (global-set-key (kbd "M-s d d") 'ediff)
 (global-set-key (kbd "M-s d b") 'ediff-buffers)
 (global-set-key (kbd "M-s d r") 'ediff-revision)
-(global-set-key (kbd "M-g t c") 'tramp-cleanup-connections)
+(global-set-key (kbd "M-g t c") 'tramp-cleanup-connection)
 (global-set-key (kbd "M-g t a") 'tramp-cleanup-all-connections)
 
 ;; ---- Additional Key-chord bindings ----
@@ -111,9 +112,7 @@
 (define-key god-mode-isearch-map (kbd "n") 'next-line)
 (define-key god-mode-isearch-map (kbd "p") 'previous-line)
 (defun god-mode-update-cursor ()
-  (setq cursor-type (if (or god-local-mode buffer-read-only)
-                        '(bar . 3)
-                      'box)))
+  (setq cursor-type (if god-local-mode '(bar . 3) 'box)))
 (add-hook 'god-mode-enabled-hook 'god-mode-update-cursor)
 (add-hook 'god-mode-disabled-hook 'god-mode-update-cursor)
 
