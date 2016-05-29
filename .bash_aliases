@@ -11,6 +11,7 @@ alias enw='emacs -nw -q --load ~/.shemacs'
 
 alias dui='du -hc -d 1'
 alias grep='grep --color=auto'
+alias cpi='cp -ri'
 
 alias pdflatex='/Library/TeX/Distributions/Programs/texbin/pdflatex'
 alias py='python3.5'
@@ -48,7 +49,18 @@ ei() {
 }
 
 mkcd() {
-  mkdir "$1" && cd "$1"
+    mkdir -p "$1" && cd "$1"
+}
+
+cpcd() {
+    if [ $# -lt 2 ]; then
+        echo "Must have at least 2 arguments!"; return
+    fi
+    if [ -d ${!#} ]; then
+        cp -r ${*%${!#}} ${!#} && cd ${!#}
+    else
+        echo "${!#} is not an directory or does not exist!"
+    fi
 }
 
 mkpdf(){
