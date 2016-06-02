@@ -3,6 +3,7 @@ alias lt='ls -ltrh'
 alias lk='ls -ltrho'
 alias la='ls -a'
 alias lta='ls -ltrha'
+alias lc='cl'
 
 alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
 alias emsvr='/Applications/Emacs.app/Contents/MacOS/Emacs --daemon'
@@ -37,7 +38,15 @@ alias c...='cl ../..'
 
 #Functional alias
 cl() {
-    cd ${1-.} && ls -ltrho
+    if [[ -z $1 ]]; then
+        ls -ltrho
+    elif [[ -d $1 ]]; then
+        cd $1 && ls -ltrho
+    elif [[ -f $1 ]]; then
+        cd $(dirname $1) && ls -ltrho
+    else
+        echo "$1: No such directory or file"; return 1
+    fi
 }
 
 ei() {
