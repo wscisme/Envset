@@ -37,7 +37,7 @@ alias c...='cl ../..'
 
 #Functional alias
 cl() {
-    cd ${1-.} && lt
+    cd ${1-.} && ls -ltrho
 }
 
 ei() {
@@ -53,13 +53,16 @@ mkcd() {
 }
 
 cpcd() {
+    while [[ $1 == "-*" ]]; do
+        local ops="$ops $1"; shift
+    done
     if [ $# -lt 2 ]; then
-        echo "Must have at least 2 arguments!"; return
+        echo "Must have at least 2 arguments!"; return 1
     fi
     if [ -d ${!#} ]; then
-        cp -r ${*%${!#}} ${!#} && cd ${!#}
+        cp -r $ops ${*%${!#}} ${!#} && cd ${!#}
     else
-        echo "${!#} is not an directory or does not exist!"
+        echo "${!#} is not an directory or does not exist!"; return 1
     fi
 }
 
@@ -71,3 +74,6 @@ mkpdf(){
 
     pdflatex $LATEXFILENAME && open $PDFFILENAME
 }
+
+# Enable C-s for isearch-forward
+stty -ixon
