@@ -72,7 +72,7 @@ cpcd() {
     if [ -d ${!#} ]; then
         cp -r $@ && cd -- ${!#}
     else
-        cp -r $@ && $(dirname ${!#})
+        cp -r $@ && cd $(dirname ${!#})
     fi
 }
 
