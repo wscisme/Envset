@@ -61,6 +61,10 @@ mkcd() {
     mkdir -p "$1" && cd "$1"
 }
 
+mkcp() {
+    mkdir -p ${!#} && cpcd $@
+}
+
 cpcd() {
     if [ $# -lt 2 ]; then
         echo "Must have at least 2 arguments!"; return 1
@@ -69,6 +73,21 @@ cpcd() {
         cp -r $@ && cd -- ${!#}
     else
         cp -r $@ && $(dirname ${!#})
+    fi
+}
+
+cpcl() {
+    cpcd $@ && ls -ltrhG
+}
+
+mvcd() {
+    if [ $# -lt 2 ]; then
+        echo "Must have at least 2 arguments!"; return 1
+    fi
+    if [ -d ${!#} ]; then
+        mv $@ && cd -- ${!#}
+    else
+        mv $@ && cd $(dirname ${!#})
     fi
 }
 
