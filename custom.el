@@ -19,7 +19,7 @@
 (remove-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
 ;; ---- Adjusted features ----
-(setq scroll-margin 2)
+;; (setq scroll-margin 2)
 (setq scroll-conservatively 5)
 
 ;; ---- Additional features ----
