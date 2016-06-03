@@ -37,6 +37,14 @@ alias c..='cl ..'
 alias c...='cl ../..'
 
 #Functional alias
+ei() {
+    if [ -f "$1" ]; then
+	enw "$1" --eval '(setq buffer-read-only t)' --eval '(god-local-mode 1)'
+    else
+	echo "File $1 not found."
+    fi
+}
+
 cl() {
     if [[ -z $1 ]]; then
         ls -ltrho
@@ -49,29 +57,18 @@ cl() {
     fi
 }
 
-ei() {
-    if [ -f "$1" ]; then
-	enw "$1" --eval '(setq buffer-read-only t)' --eval '(god-local-mode 1)'
-    else
-	echo "File $1 not found."
-    fi
-}
-
 mkcd() {
     mkdir -p "$1" && cd "$1"
 }
 
 cpcd() {
-    while [[ $1 == "-*" ]]; do
-        local ops="$ops $1"; shift
-    done
     if [ $# -lt 2 ]; then
         echo "Must have at least 2 arguments!"; return 1
     fi
     if [ -d ${!#} ]; then
-        cp -r $ops ${*%${!#}} ${!#} && cd ${!#}
+        cp -r $@ && cd -- ${!#}
     else
-        echo "${!#} is not an directory or does not exist!"; return 1
+        cp -r $@ && $(dirname ${!#})
     fi
 }
 
