@@ -13,7 +13,7 @@
 ;; (setq prelude-theme 'solarized-dark)
 (setq prelude-whitespace nil)
 (setq prelude-flyspell nil)
-(setq electric-indent-mode nil)
+;; (setq electric-indent-mode nil)
 ;; (setq prelude-auto-save nil)
 ;; (global-flycheck-mode -1)
 (remove-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
