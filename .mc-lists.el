@@ -17,7 +17,9 @@
         easy-kill
         electric-newline-and-maybe-indent
         eval-last-sexp
+        forward-whitespace
         kill-region
+        org-self-insert-command
         prelude-eval-and-replace
         sp-backward-delete-char
         sp-backward-kill-word
@@ -25,6 +27,7 @@
         sp-delete-char
         sp-forward-sexp
         sp-kill-word
+        sp-remove-active-pair-overlay
         sp-splice-sexp
         undefined
         ))
@@ -32,8 +35,10 @@
 (setq mc/cmds-to-run-once
       '(
         avy-goto-word-1
+        crux-switch-to-previous-buffer
         god-local-mode
         ido-find-file
+        ido-switch-buffer
         smex
         yank-rectangle
         ))
