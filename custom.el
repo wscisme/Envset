@@ -15,7 +15,7 @@
 (setq prelude-flyspell nil)
 ;; (setq electric-indent-mode nil)
 ;; (setq prelude-auto-save nil)
-;; (global-flycheck-mode -1)
+(global-flycheck-mode -1)
 (remove-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
 ;; ---- Adjusted features ----
@@ -25,6 +25,7 @@
 ;; ---- Additional features ----
 (when (not (display-graphic-p))
   (menu-bar-mode -1)
+  (beacon-mode -1)
   (global-hl-line-mode -1))
 (when  (display-graphic-p)
   (scroll-bar-mode -1)
@@ -33,6 +34,8 @@
 (setq display-time-day-and-date 't)
 (setq display-time-24hr-format 't)
 (display-time)
+
+(set-default 'truncate-partial-width-windows 120)
 
 ;; ---- Additional auto-mode ----
 (add-to-list 'auto-mode-alist '(".bash_aliases" . shell-script-mode))
@@ -60,12 +63,14 @@
 (global-set-key (kbd "C-s-j") 'crux-duplicate-and-comment-current-line-or-region)
 (global-set-key (kbd "s-SPC") 'just-one-space)
 (global-set-key (kbd "C-;")   'god-local-mode)
+(global-set-key (kbd "M-i")   'company-complete)
 (global-set-key (kbd "M-s r") 'rgrep)
 (global-set-key (kbd "M-s d d") 'ediff)
 (global-set-key (kbd "M-s d b") 'ediff-buffers)
 (global-set-key (kbd "M-s d r") 'ediff-revision)
 (global-set-key (kbd "M-g t c") 'tramp-cleanup-connection)
 (global-set-key (kbd "M-g t a") 'tramp-cleanup-all-connections)
+(global-set-key (kbd "M-g i w") 'toggle-truncate-lines)
 
 ;; ---- Additional Key-chord bindings ----
 (key-chord-define-global "OO" 'other-window)
@@ -119,12 +124,20 @@
 (add-hook 'god-mode-disabled-hook 'god-mode-update-cursor)
 
 ;; ---- Other mode specific setup ----
-(set-face-background 'hl-line "#3F3F3F")
+(set-face-background 'hl-line "#3F3F3F") ;; for deeper-blue theme
 (define-key company-active-map (kbd "<return>") nil)
 (define-key company-active-map (kbd "RET") nil)
 (define-key company-active-map (kbd "M-i") 'company-complete-selection)
 (add-hook 'latex-mode-hook 'smartparens-mode)
 (add-hook 'latex-mode-hook (lambda() (key-chord-define latex-mode-map "==" "&=& ")))
+(key-chord-define c++-mode-map ".." "->")
+
+(custom-set-variables
+ (when (display-graphic-p)
+   '(custom-enabled-themes (quote (deeper-blue))))
+ (when (not (display-graphic-p))
+   '(custom-enabled-themes (quote (tango-dark))))
+ )
 
 ;; --------------------------------------
 ;;  File modification required features:
@@ -136,10 +149,3 @@
 ;; Mod: ~/.emacs.d/core/prelude-editor.el: 171-175: ;; ...
 ;; Mod: ~/.emacs.d/core/prelude-mode.el: 46: ;; ...
 ;; --------------------------------------
-
-(custom-set-variables
- (when (display-graphic-p)
-   '(custom-enabled-themes (quote (deeper-blue))))
- (when (not (display-graphic-p))
-   '(custom-enabled-themes (quote (tango-dark))))
- )
