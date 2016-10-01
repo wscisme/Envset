@@ -4,17 +4,22 @@
 (setq mc/cmds-to-run-for-all
       '(
         apply-operation-to-number-at-point
+        c-electric-brace
         c-electric-colon
         c-electric-delete-forward
         c-electric-lt-gt
         c-electric-paren
         c-electric-semi&comma
+        c-electric-star
         c-indent-line-or-region
+        comment-dwim
         comment-dwim-line
         completion-at-point
         crux-duplicate-current-line-or-region
+        crux-eval-and-replace
         crux-smart-open-line
         easy-kill
+        easy-kill-thing
         electric-newline-and-maybe-indent
         eval-last-sexp
         forward-whitespace
@@ -26,6 +31,7 @@
         sp-backward-sexp
         sp-delete-char
         sp-forward-sexp
+        sp-kill-hybrid-sexp
         sp-kill-word
         sp-remove-active-pair-overlay
         sp-splice-sexp
@@ -34,7 +40,9 @@
 
 (setq mc/cmds-to-run-once
       '(
+        avy-goto-char
         avy-goto-word-1
+        crux-recentf-ido-find-file
         crux-switch-to-previous-buffer
         god-local-mode
         ido-find-file
