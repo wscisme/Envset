@@ -123,11 +123,15 @@
 (add-hook 'god-mode-enabled-hook 'god-mode-update-cursor)
 (add-hook 'god-mode-disabled-hook 'god-mode-update-cursor)
 
-;; ---- Other mode specific setup ----
-(set-face-background 'hl-line "#3F3F3F") ;; for deeper-blue theme
+;; ---- Company configs ----
+(setq company-idle-delay 0)
+(setq company-dabbrev-code-ignore-case t)
 (define-key company-active-map (kbd "<return>") nil)
 (define-key company-active-map (kbd "RET") nil)
 (define-key company-active-map (kbd "M-i") 'company-complete-selection)
+
+;; ---- Other mode specific setup ----
+(set-face-background 'hl-line "#3F3F3F") ;; for deeper-blue theme
 (add-hook 'latex-mode-hook 'smartparens-mode)
 (add-hook 'latex-mode-hook (lambda() (key-chord-define latex-mode-map "==" "&=& ")))
 (key-chord-define c++-mode-map ".." "->")
