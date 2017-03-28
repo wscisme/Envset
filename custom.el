@@ -110,6 +110,10 @@
 (define-key god-local-mode-map (kbd "M-p") (lambda()
                                              (interactive)
                                              (previous-line 5)))
+(define-key god-local-mode-map (kbd "M-s .") (lambda()
+                                               (interactive)
+                                               (isearch-forward-symbol-at-point)
+                                               (god-mode-isearch-activate)))
 (define-key god-local-mode-map [escape]  'keyboard-quit)
 (require 'god-mode-isearch)
 (define-key isearch-mode-map (kbd "M-a") 'god-mode-isearch-activate)
@@ -129,6 +133,7 @@
 (define-key company-active-map (kbd "<return>") nil)
 (define-key company-active-map (kbd "RET") nil)
 (define-key company-active-map (kbd "M-i") 'company-complete-selection)
+(define-key company-active-map (kbd "TAB") 'company-indent-or-complete-common)
 
 ;; ---- Other mode specific setup ----
 (set-face-background 'hl-line "#3F3F3F") ;; for deeper-blue theme
@@ -136,20 +141,21 @@
 (add-hook 'latex-mode-hook (lambda() (key-chord-define latex-mode-map "==" "&=& ")))
 (key-chord-define c++-mode-map ".." "->")
 
+;; --------------------------------------
+;;  File modification required features:
+;; --------------------------------------
+;; Mod: ~/.emacs.d/modules/prelude-c.el: 39: (c-basic-offset 2)
+;; Add: ~/.emacs.d/modules/prelude-c.el: 40: (local-unset-key (kbd "C-M-j"))
+;; Add: ~/.emacs.d/modules/prelude-c.el: 40: (local-unset-key (kbd "C-c ."))
+;; Mod: ~/.emacs.d/elpa/smartparens/smartparens.el: 206: ("M-D" . sp-splice-sexp)
+;; Mod: ~/.emacs.d/elpa/god-mode/god-mode.el: 45: ("m" . "M-")
+;; Mod: ~/.emacs.d/core/prelude-editor.el: 171-175: ;; ...
+;; Mod: ~/.emacs.d/core/prelude-mode.el: 46: ;; ...
+;; --------------------------------------
+
 (custom-set-variables
  (when (display-graphic-p)
    '(custom-enabled-themes (quote (deeper-blue))))
  (when (not (display-graphic-p))
    '(custom-enabled-themes (quote (tango-dark))))
  )
-
-;; --------------------------------------
-;;  File modification required features:
-;; --------------------------------------
-;; Mod: ~/.emacs.d/modules/prelude-c.el: 39: (c-basic-offset 2)
-;; Add: ~/.emacs.d/modules/prelude-c.el: 40: (local-unset-key (kbd "C-M-j"))
-;; Mod: ~/.emacs.d/elpa/smartparens/smartparens.el: 206: ("M-D" . sp-splice-sexp)
-;; Mod: ~/.emacs.d/elpa/god-mode/god-mode.el: 45: ("m" . "M-")
-;; Mod: ~/.emacs.d/core/prelude-editor.el: 171-175: ;; ...
-;; Mod: ~/.emacs.d/core/prelude-mode.el: 46: ;; ...
-;; --------------------------------------
