@@ -20,7 +20,7 @@
 
 ;; ---- Adjusted features ----
 ;; (setq scroll-margin 2)
-(setq scroll-conservatively 5)
+(setq scroll-conservatively 8)
 
 ;; ---- Additional features ----
 (when (not (display-graphic-p))
@@ -62,8 +62,6 @@
 (global-set-key (kbd "C-M-j") 'crux-duplicate-current-line-or-region)
 (global-set-key (kbd "C-s-j") 'crux-duplicate-and-comment-current-line-or-region)
 (global-set-key (kbd "s-SPC") 'just-one-space)
-(global-set-key (kbd "C-;")   'god-local-mode)
-(global-set-key (kbd "M-i")   'company-complete)
 (global-set-key (kbd "M-s r") 'rgrep)
 (global-set-key (kbd "M-s d d") 'ediff)
 (global-set-key (kbd "M-s d b") 'ediff-buffers)
@@ -71,6 +69,12 @@
 (global-set-key (kbd "M-g t c") 'tramp-cleanup-connection)
 (global-set-key (kbd "M-g t a") 'tramp-cleanup-all-connections)
 (global-set-key (kbd "M-g i w") 'toggle-truncate-lines)
+(global-set-key (kbd "M-n") (lambda()
+                              (interactive)
+                              (next-line 7)))
+(global-set-key (kbd "M-p") (lambda()
+                              (interactive)
+                              (previous-line 7)))
 
 ;; ---- Additional Key-chord bindings ----
 (key-chord-define-global "OO" 'other-window)
@@ -102,19 +106,18 @@
 
 ;; ---- God-mode configs ----
 (require 'god-mode)
+(global-set-key (kbd "C-;") 'god-local-mode)
+(global-set-key (kbd "M-s a") (lambda()
+                                (interactive)
+                                (isearch-forward-symbol-at-point)
+                                (god-mode-isearch-activate)))
 (define-key god-local-mode-map (kbd ".") 'repeat)
 (define-key god-local-mode-map (kbd "i") 'god-local-mode)
-(define-key god-local-mode-map (kbd "M-n") (lambda()
-                                             (interactive)
-                                             (next-line 5)))
-(define-key god-local-mode-map (kbd "M-p") (lambda()
-                                             (interactive)
-                                             (previous-line 5)))
 (define-key god-local-mode-map (kbd "M-s .") (lambda()
                                                (interactive)
                                                (isearch-forward-symbol-at-point)
                                                (god-mode-isearch-activate)))
-(define-key god-local-mode-map [escape]  'keyboard-quit)
+(define-key god-local-mode-map [escape] 'keyboard-quit)
 (require 'god-mode-isearch)
 (define-key isearch-mode-map (kbd "M-a") 'god-mode-isearch-activate)
 (define-key god-mode-isearch-map (kbd "M-a") 'god-mode-isearch-disable)
@@ -130,6 +133,7 @@
 ;; ---- Company configs ----
 (setq company-idle-delay 0)
 (setq company-dabbrev-code-ignore-case t)
+(global-set-key (kbd "M-i") 'company-complete)
 (define-key company-active-map (kbd "<return>") nil)
 (define-key company-active-map (kbd "RET") nil)
 (define-key company-active-map (kbd "M-i") 'company-complete-selection)
@@ -140,16 +144,18 @@
 (add-hook 'latex-mode-hook 'smartparens-mode)
 (add-hook 'latex-mode-hook (lambda() (key-chord-define latex-mode-map "==" "&=& ")))
 (key-chord-define c++-mode-map ".." "->")
+(define-key c++-mode-map (kbd "C-M-j") nil)
+(define-key c++-mode-map (kbd "C-c .") nil)
 
 ;; --------------------------------------
 ;;  File modification required features:
 ;; --------------------------------------
 ;; Mod: ~/.emacs.d/modules/prelude-c.el: 39: (c-basic-offset 2)
 ;; Add: ~/.emacs.d/modules/prelude-c.el: 40: (local-unset-key (kbd "C-M-j"))
-;; Add: ~/.emacs.d/modules/prelude-c.el: 40: (local-unset-key (kbd "C-c ."))
-;; Mod: ~/.emacs.d/elpa/smartparens/smartparens.el: 206: ("M-D" . sp-splice-sexp)
 ;; Mod: ~/.emacs.d/elpa/god-mode/god-mode.el: 45: ("m" . "M-")
+;; Mod: ~/.emacs.d/core/prelude-editor.el: 88: (sp-use-smartparens-bindings)
 ;; Mod: ~/.emacs.d/core/prelude-editor.el: 171-175: ;; ...
+;; Mod: ~/.emacs.d/core/prelude-editor.el: 302-305: ;; ...
 ;; Mod: ~/.emacs.d/core/prelude-mode.el: 46: ;; ...
 ;; --------------------------------------
 
