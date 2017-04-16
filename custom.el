@@ -15,6 +15,7 @@
 (setq prelude-flyspell nil)
 ;; (setq electric-indent-mode nil)
 ;; (setq prelude-auto-save nil)
+(global-unset-key (kbd "C--"))
 (global-flycheck-mode -1)
 (remove-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
@@ -138,6 +139,18 @@
 (define-key company-active-map (kbd "RET") nil)
 (define-key company-active-map (kbd "M-i") 'company-complete-selection)
 (define-key company-active-map (kbd "TAB") 'company-indent-or-complete-common)
+
+;; ---- Smartparens configs ----
+(define-key smartparens-mode-map (kbd "M-<backspace>") nil)
+(define-key smartparens-mode-map (kbd "s-<backspace>") 'sp-backward-unwrap-sexp)
+(define-key smartparens-mode-map (kbd "C-M-SPC") nil)
+(define-key smartparens-mode-map (kbd "C-M-u") nil)
+(define-key smartparens-mode-map (kbd "C-M-n") nil)
+(define-key smartparens-mode-map (kbd "C-M-p") nil)
+(define-key smartparens-mode-map (kbd "C-s-<backspace>") 'sp-splice-sexp-killing-around)
+(define-key smartparens-mode-map (kbd "C-s-]") 'sp-select-previous-thing)
+(define-key smartparens-mode-map (kbd "s-f") 'sp-forward-symbol)
+(define-key smartparens-mode-map (kbd "s-b") 'sp-backward-symbol)
 
 ;; ---- Other mode specific setup ----
 (set-face-background 'hl-line "#3F3F3F") ;; for deeper-blue theme
