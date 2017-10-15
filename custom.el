@@ -35,12 +35,12 @@
 (setq display-time-day-and-date 't)
 (setq display-time-24hr-format 't)
 (display-time)
-
-(set-default 'truncate-partial-width-windows 120)
+(set-default 'truncate-partial-width-windows 185)
 
 ;; ---- Additional auto-mode ----
 (add-to-list 'auto-mode-alist '(".bash_aliases" . shell-script-mode))
 (setq auto-mode-alist (cons (cons "\\.h\\'" 'c++-mode) auto-mode-alist))
+(setq auto-mode-alist (cons (cons "\\.icc\\'" 'c++-mode) auto-mode-alist))
 
 ;; ---- Additional functions ----
 (defun comment-dwim-line (&optional arg)
@@ -60,27 +60,20 @@
 (global-set-key (kbd "C-s-n") 'move-text-down)
 (global-set-key (kbd "C-s-f") 'forward-whitespace)
 (global-set-key (kbd "C-s-b") (lambda() (interactive) (forward-whitespace -1)))
-(global-set-key (kbd "C-M-j") 'crux-duplicate-current-line-or-region)
-(global-set-key (kbd "C-s-j") 'crux-duplicate-and-comment-current-line-or-region)
 (global-set-key (kbd "s-SPC") 'just-one-space)
 (global-set-key (kbd "M-s r") 'rgrep)
 (global-set-key (kbd "M-s d d") 'ediff)
 (global-set-key (kbd "M-s d b") 'ediff-buffers)
 (global-set-key (kbd "M-s d r") 'ediff-revision)
+(global-set-key (kbd "M-s d l") 'ediff-regions-linewise)
 (global-set-key (kbd "M-g t c") 'tramp-cleanup-connection)
 (global-set-key (kbd "M-g t a") 'tramp-cleanup-all-connections)
 (global-set-key (kbd "M-g i w") 'toggle-truncate-lines)
-(global-set-key (kbd "M-n") (lambda()
-                              (interactive)
-                              (next-line 7)))
-(global-set-key (kbd "M-p") (lambda()
-                              (interactive)
-                              (previous-line 7)))
+(global-set-key (kbd "M-n") (lambda() (interactive) (next-line 7)))
+(global-set-key (kbd "M-p") (lambda() (interactive) (previous-line 7)))
 
 ;; ---- Additional Key-chord bindings ----
 (key-chord-define-global "OO" 'other-window)
-(key-chord-define-global "KK" 'delete-window)
-(key-chord-define-global "DD" 'delete-other-windows)
 (key-chord-define-global "LL" (lambda()
                                 (interactive)
                                 (split-window-right)
@@ -91,6 +84,7 @@
                                 (kill-buffer (current-buffer))
                                 (delete-window)))
 (key-chord-define-global ";;" 'comment-dwim-line)
+(key-chord-define-global "xx" 'nil)
 
 ;; ---- Multiple-cursors configs ----
 (require 'multiple-cursors)
@@ -108,22 +102,20 @@
 ;; ---- God-mode configs ----
 (require 'god-mode)
 (global-set-key (kbd "C-;") 'god-local-mode)
-(global-set-key (kbd "M-s a") (lambda()
-                                (interactive)
+(global-set-key (kbd "M-s a") (lambda() (interactive)
                                 (isearch-forward-symbol-at-point)
                                 (god-mode-isearch-activate)))
 (define-key god-local-mode-map (kbd ".") 'repeat)
 (define-key god-local-mode-map (kbd "i") 'god-local-mode)
-(define-key god-local-mode-map (kbd "M-s .") (lambda()
-                                               (interactive)
+(define-key god-local-mode-map (kbd "M-s .") (lambda() (interactive)
                                                (isearch-forward-symbol-at-point)
                                                (god-mode-isearch-activate)))
 (define-key god-local-mode-map [escape] 'keyboard-quit)
 (require 'god-mode-isearch)
 (define-key isearch-mode-map (kbd "M-a") 'god-mode-isearch-activate)
 (define-key god-mode-isearch-map (kbd "M-a") 'god-mode-isearch-disable)
-(define-key god-mode-isearch-map (kbd "M-v") 'scroll-down)
-(define-key god-mode-isearch-map (kbd "v") 'scroll-up)
+(define-key god-mode-isearch-map (kbd "M-v") 'scroll-down-command)
+(define-key god-mode-isearch-map (kbd "v") 'scroll-up-command)
 (define-key god-mode-isearch-map (kbd "n") 'next-line)
 (define-key god-mode-isearch-map (kbd "p") 'previous-line)
 (defun god-mode-update-cursor ()
@@ -133,6 +125,7 @@
 
 ;; ---- Company configs ----
 (setq company-idle-delay 0)
+(setq company-dabbrev-downcase nil)
 (setq company-dabbrev-code-ignore-case t)
 (global-set-key (kbd "M-i") 'company-complete)
 (define-key company-active-map (kbd "<return>") nil)
@@ -147,8 +140,10 @@
 (define-key smartparens-mode-map (kbd "C-M-u") nil)
 (define-key smartparens-mode-map (kbd "C-M-n") nil)
 (define-key smartparens-mode-map (kbd "C-M-p") nil)
+(define-key smartparens-mode-map (kbd "C-M-j") 'sp-down-sexp)
 (define-key smartparens-mode-map (kbd "C-s-<backspace>") 'sp-splice-sexp-killing-around)
 (define-key smartparens-mode-map (kbd "C-s-]") 'sp-select-previous-thing)
+(define-key smartparens-mode-map (kbd "M-S") 'sp-split-sexp)
 (define-key smartparens-mode-map (kbd "s-f") 'sp-forward-symbol)
 (define-key smartparens-mode-map (kbd "s-b") 'sp-backward-symbol)
 
@@ -159,6 +154,24 @@
 (key-chord-define c++-mode-map ".." "->")
 (define-key c++-mode-map (kbd "C-M-j") nil)
 (define-key c++-mode-map (kbd "C-c .") nil)
+(add-hook 'c-mode-common-hook 'google-set-c-style)
+(add-to-list 'ido-ignore-files "\.root")
+(add-to-list 'ido-ignore-files "\.pcm")
+
+;; ---- Keyboard macros ----
+(fset 'debug-cout-line (lambda (&optional arg) "Make a cout statement of the current line."
+ (interactive "p") (kmacro-exec-ring-item (quote ([1 9 67108896 5 23 99 111 117 116 32 60 60 32 95 95 76 73 78 69 95 95 32 60 60 32 34 58 32 25 61 32 5 32 60 60 32 25 32 60 60 32 101 110 100 108 59 1 14] 0 "%d")) arg)))
+(define-key c++-mode-map (kbd "M-g i c") 'debug-cout-line)
+(define-key c++-mode-map (kbd "M-g d d") 'debug-cout-line)
+
+(fset 'debug-cout-line-with-fn (lambda (&optional arg) "Make a cout statement of the current line with filename."
+ (interactive "p") (kmacro-exec-ring-item (quote ([1 9 67108896 5 23 99 111 117 116 32 60 60 32 95 95 70 73 76 69 95 95 32 60 60 32 39 58 39 32 60 60 32 95 95 76 73 78 69 95 95 32 60 60 32 34 58 32 25 61 32 5 32 60 60 32 25 32 60 60 32 101 110 100 108 59 1 14] 0 "%d")) arg)))
+(define-key c++-mode-map (kbd "M-g d f") 'debug-cout-line-with-fn)
+
+(fset 'debug-cout-var-2 (lambda (&optional arg) "Make a cout statement of the current line with 2 variables."
+ (interactive "p") (kmacro-exec-ring-item (quote ([1 9 67108896 8388614 23 99 111 117 116 32 60 60 32 95 95 76 73 78 69 95 95 32 60 60 32 34 58 32 25 backspace 61 32 6 32 60 60 32 25 67108896 5 23 60 60 32 34 44 32 25 61 32 5 32 60 60 32 25 32 60 60 32 101 110 100 108 59 1] 0 "%d")) arg)))
+(define-key c++-mode-map (kbd "M-g d 2") 'debug-cout-var-2)
+
 
 ;; --------------------------------------
 ;;  File modification required features:
