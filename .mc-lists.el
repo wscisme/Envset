@@ -3,50 +3,154 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+        anzu-query-replace
         apply-operation-to-number-at-point
+        backward-sexp
+        beginning-of-defun
+        c-beginning-of-statement
         c-electric-brace
         c-electric-colon
         c-electric-delete-forward
         c-electric-lt-gt
         c-electric-paren
+        c-electric-pound
         c-electric-semi&comma
+        c-electric-slash
         c-electric-star
+        c-end-of-statement
+        c-hungry-delete-forward
         c-indent-line-or-region
+        c-set-style
+        comint-delchar-or-maybe-eof
+        comint-send-input
         comment-dwim
         comment-dwim-line
-        completion-at-point
+        company-complete
+        crux-duplicate-and-comment-current-line-or-region
         crux-duplicate-current-line-or-region
         crux-eval-and-replace
+        crux-kill-whole-line
         crux-smart-open-line
+        crux-top-join-line
+        delete-horizontal-space
+        delete-indentation
+        delete-rectangle
+        downcase-region
         easy-kill
-        easy-kill-thing
+        easy-kill-exchange-point-and-mark
+        easy-kill-mark-region
+        easy-mark
         electric-newline-and-maybe-indent
-        eval-last-sexp
+        electric-verilog-colon
+        electric-verilog-semi
+        electric-verilog-tab
+        eval-print-last-sexp
+        evil-replace
+        fill-paragraph
+        forward-sentence
+        forward-sexp
         forward-whitespace
+        indent-for-tab-command
+        indent-new-comment-line
+        keyboard-quit
         kill-region
+        kill-sentence
+        kmacro-end-and-call-macro
+        mark-paragraph
+        markdown-outdent-or-delete
+        move-text-down
+        move-text-up
+        nxml-electric-slash
+        org-beginning-of-line
+        org-comment-dwim
+        org-ctrl-c-ctrl-c
+        org-cycle
+        org-delete-char
+        org-delete-indentation
+        org-demote-subtree
+        org-end-of-line
+        org-force-self-insert
+        org-kill-line
+        org-open-line
+        org-promote-subtree
+        org-return
+        org-return-indent
         org-self-insert-command
-        prelude-eval-and-replace
+        org-yank
+        python-indent-shift-right
+        set-fill-prefix
+        sh-assignment
         sp-backward-delete-char
+        sp-backward-down-sexp
         sp-backward-kill-word
         sp-backward-sexp
+        sp-backward-symbol
+        sp-backward-unwrap-sexp
+        sp-beginning-of-sexp
         sp-delete-char
+        sp-down-sexp
         sp-forward-sexp
+        sp-forward-symbol
         sp-kill-hybrid-sexp
+        sp-kill-region
         sp-kill-word
         sp-remove-active-pair-overlay
+        sp-select-next-thing
+        sp-select-previous-thing
         sp-splice-sexp
-        undefined
+        sp-split-sexp
+        sp-up-sexp
+        string-rectangle
+        tcl-electric-char
+        tcl-electric-hash
+        tcl-indent-command
+        tex-handle-newline
+        tex-terminate-paragraph
+        vhdl-backward-sexp
+        vhdl-delete-indentation
+        vhdl-electric-comma
+        vhdl-electric-dash
+        vhdl-electric-period
+        vhdl-electric-quote
+        vhdl-electric-return
+        vhdl-electric-semicolon
+        vhdl-electric-space
+        vhdl-electric-tab
+        xref-pop-marker-stack
+        yaml-electric-backspace
+        yaml-electric-dash-and-dot
         ))
 
 (setq mc/cmds-to-run-once
       '(
-        avy-goto-char
+        avy-goto-line
         avy-goto-word-1
+        beginning-of-buffer
+        browse-kill-ring
+        crux-cleanup-buffer-or-region
         crux-recentf-ido-find-file
+        crux-swap-windows
         crux-switch-to-previous-buffer
+        describe-key
+        describe-syntax
+        electric-verilog-terminate-line
+        end-of-buffer
+        eshell
         god-local-mode
+        god-mode-self-insert
+        goto-line
+        helm-semantic-or-imenu
         ido-find-file
         ido-switch-buffer
+        kmacro-end-or-call-macro
+        mouse-buffer-menu
+        mouse-drag-region-rectangle
+        revert-buffer
         smex
+        tcl-electric-brace
+        text-scale-increase
+        tramp-cleanup-all-connections
+        undo-tree-visualize
+        vhdl-electric-open-bracket
         yank-rectangle
         ))

@@ -18,10 +18,13 @@
 (global-unset-key (kbd "C--"))
 (global-flycheck-mode -1)
 (remove-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
+(global-company-mode -1)  ; due to the lag over remote
+(projectile-mode -1)      ; due to the lag over remote
 
 ;; ---- Adjusted features ----
 ;; (setq scroll-margin 2)
 (setq scroll-conservatively 8)
+(set-face-attribute 'default nil :height 140)
 
 ;; ---- Additional features ----
 (when (not (display-graphic-p))
@@ -41,6 +44,7 @@
 (add-to-list 'auto-mode-alist '(".bash_aliases" . shell-script-mode))
 (setq auto-mode-alist (cons (cons "\\.h\\'" 'c++-mode) auto-mode-alist))
 (setq auto-mode-alist (cons (cons "\\.icc\\'" 'c++-mode) auto-mode-alist))
+(setq auto-mode-alist (cons (cons "\\.xdc\\'" 'tcl-mode) auto-mode-alist))
 
 ;; ---- Additional functions ----
 (defun comment-dwim-line (&optional arg)
@@ -74,13 +78,11 @@
 
 ;; ---- Additional Key-chord bindings ----
 (key-chord-define-global "OO" 'other-window)
-(key-chord-define-global "LL" (lambda()
-                                (interactive)
+(key-chord-define-global "LL" (lambda() (interactive)
                                 (split-window-right)
                                 (other-window 1)
                                 (ido-switch-buffer)))
-(key-chord-define-global "XX" (lambda()
-                                (interactive)
+(key-chord-define-global "XX" (lambda() (interactive)
                                 (kill-buffer (current-buffer))
                                 (delete-window)))
 (key-chord-define-global ";;" 'comment-dwim-line)
@@ -94,10 +96,23 @@
 (global-set-key (kbd "C-c C->") 'mc/mark-next-like-this-word)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this-dwim)
 (global-set-key (kbd "C-M-<mouse-1>") 'mc/add-cursor-on-click)
-(global-set-key (kbd "C-c m n") 'mc/insert-numbers)
-(global-set-key (kbd "C-c m a") 'mc/insert-letters)
-(global-set-key (kbd "C-c m m") 'mc/unmark-next-like-this)
-(global-set-key (kbd "C-c m s") 'mc/skip-to-next-like-this)
+(global-set-key (kbd "C-, C-,") 'mc/freeze-fake-cursors-dwim)
+(global-set-key (kbd "C-, SPC") 'mc/mark-pop)
+(define-key mc/keymap (kbd "<return>") nil)
+(define-key mc/keymap (kbd "C-, n") 'mc/insert-numbers)
+(define-key mc/keymap (kbd "C-, a") 'mc/insert-letters)
+(define-key mc/keymap (kbd "C-, s") 'mc/skip-to-next-like-this)
+(define-key mc/keymap (kbd "C-, m") 'mc/unmark-next-like-define)
+(define-key mc/keymap (kbd "C-, M-C-f") 'mc/mark-next-sexps)
+(define-key mc/keymap (kbd "C-, M-C-b") 'mc/mark-previous-sexps)
+(define-key mc/keymap (kbd "C-, <") 'mc/mark-all-above)
+(define-key mc/keymap (kbd "C-, >") 'mc/mark-all-below)
+(define-key mc/keymap (kbd "C-, C-d") 'mc/remove-current-cursor)
+(define-key mc/keymap (kbd "C-, C-k") 'mc/remove-cursors-at-eol)
+(define-key mc/keymap (kbd "C-, d")   'mc/remove-duplicated-cursors)
+(define-key mc/keymap (kbd "C-, C-o") 'mc/remove-cursors-on-blank-lines)
+(define-key mc/keymap (kbd "C-, ,")   'mc/move-to-column)
+(define-key mc/keymap (kbd "C-, =")   'mc/compare-chars)
 
 ;; ---- God-mode configs ----
 (require 'god-mode)
@@ -155,23 +170,53 @@
 (define-key c++-mode-map (kbd "C-M-j") nil)
 (define-key c++-mode-map (kbd "C-c .") nil)
 (add-hook 'c-mode-common-hook 'google-set-c-style)
+(add-hook 'c-mode-common-hook 'google-make-newline-indent)
 (add-to-list 'ido-ignore-files "\.root")
 (add-to-list 'ido-ignore-files "\.pcm")
+(add-to-list 'ido-ignore-files "\_C.d")
+(setq verilog-indent-level 2)
+(add-hook 'verilog-mode-hook (lambda() (local-unset-key (kbd "C-;"))))
+(add-hook 'verilog-mode-hook (lambda() (local-unset-key (kbd ";"))))
+(setq vhdl-end-comment-column 180)
+(add-hook 'vhdl-mode-hook (lambda() (local-unset-key (kbd "SPC"))))
+
 
 ;; ---- Keyboard macros ----
 (fset 'debug-cout-line (lambda (&optional arg) "Make a cout statement of the current line."
  (interactive "p") (kmacro-exec-ring-item (quote ([1 9 67108896 5 23 99 111 117 116 32 60 60 32 95 95 76 73 78 69 95 95 32 60 60 32 34 58 32 25 61 32 5 32 60 60 32 25 32 60 60 32 101 110 100 108 59 1 14] 0 "%d")) arg)))
-(define-key c++-mode-map (kbd "M-g i c") 'debug-cout-line)
 (define-key c++-mode-map (kbd "M-g d d") 'debug-cout-line)
 
 (fset 'debug-cout-line-with-fn (lambda (&optional arg) "Make a cout statement of the current line with filename."
  (interactive "p") (kmacro-exec-ring-item (quote ([1 9 67108896 5 23 99 111 117 116 32 60 60 32 95 95 70 73 76 69 95 95 32 60 60 32 39 58 39 32 60 60 32 95 95 76 73 78 69 95 95 32 60 60 32 34 58 32 25 61 32 5 32 60 60 32 25 32 60 60 32 101 110 100 108 59 1 14] 0 "%d")) arg)))
 (define-key c++-mode-map (kbd "M-g d f") 'debug-cout-line-with-fn)
 
-(fset 'debug-cout-var-2 (lambda (&optional arg) "Make a cout statement of the current line with 2 variables."
+(fset 'debug-cout-two-var (lambda (&optional arg) "Make a cout statement of the current line with 2 variables."
  (interactive "p") (kmacro-exec-ring-item (quote ([1 9 67108896 8388614 23 99 111 117 116 32 60 60 32 95 95 76 73 78 69 95 95 32 60 60 32 34 58 32 25 backspace 61 32 6 32 60 60 32 25 67108896 5 23 60 60 32 34 44 32 25 61 32 5 32 60 60 32 25 32 60 60 32 101 110 100 108 59 1] 0 "%d")) arg)))
-(define-key c++-mode-map (kbd "M-g d 2") 'debug-cout-var-2)
+(define-key c++-mode-map (kbd "M-g d 2") 'debug-cout-two-var)
 
+(fset 'debug-cout-append-one (lambda (&optional arg) "Append the current variable to the cout statement at previous line." 
+ (interactive "p") (kmacro-exec-ring-item (quote ([1 9 67108896 5 23 4 16 5 67108896 134217826 backspace 34 44 32 25 61 32 5 32 60 60 32 25 32 60 60 32 101 110 100 108 59 1 14 9] 0 "%d")) arg)))
+(define-key c++-mode-map (kbd "M-g d a") 'debug-cout-append-one)
+
+;; ;; verilog mode new indent levels
+;; (custom-set-variables
+;;  '(verilog-align-ifelse t)
+;;  '(verilog-auto-delete-trailing-whitespace t)
+;;  '(verilog-auto-inst-param-value t)
+;;  '(verilog-auto-inst-vector nil)
+;;  '(verilog-auto-lineup (quote all))
+;;  '(verilog-auto-newline nil)
+;;  '(verilog-auto-save-policy nil)
+;;  '(verilog-auto-template-warn-unused t)
+;;  '(verilog-case-indent 2)
+;;  '(verilog-cexp-indent 2)
+;;  '(verilog-highlight-grouping-keywords t)
+;;  '(verilog-highlight-modules t)
+;;  '(verilog-indent-level 2)
+;;  '(verilog-indent-level-behavioral 2)
+;;  '(verilog-indent-level-declaration 2)
+;;  '(verilog-indent-level-module 2)
+;;  '(verilog-tab-to-comment nil))
 
 ;; --------------------------------------
 ;;  File modification required features:
@@ -185,9 +230,25 @@
 ;; Mod: ~/.emacs.d/core/prelude-mode.el: 46: ;; ...
 ;; --------------------------------------
 
+;; (custom-set-variables
+;;  '(c-offsets-alist (quote ((inlambda . 0))))
+;;  (when (display-graphic-p)
+;;    '(custom-enabled-themes (quote (deeper-blue))))
+;;  (when (not (display-graphic-p))
+;;    '(custom-enabled-themes (quote (tango-dark))))
+;;  )
+
 (custom-set-variables
+'(c-offsets-alist (quote ((inlambda . 0))))
  (when (display-graphic-p)
    '(custom-enabled-themes (quote (deeper-blue))))
  (when (not (display-graphic-p))
    '(custom-enabled-themes (quote (tango-dark))))
+ )
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  )

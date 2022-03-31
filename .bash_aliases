@@ -1,3 +1,4 @@
+# Aliases and functions
 alias ls='ls -G'
 alias lt='ls -ltrho'
 alias le='ls -ltrho'
@@ -15,17 +16,22 @@ alias cpi='cp -ri'
 
 alias pdflatex='/Library/TeX/Distributions/Programs/texbin/pdflatex'
 alias py='python3'
+alias g11='g++ -std=c++11'
 alias g14='g++ -std=c++14'
-alias g17='g++ -std=c++1z'
+alias g17='g++ -std=c++17'
+alias g20='g++ -std=c++2a'
 
 alias gst='git st'
 alias gad='git add'
 alias gcm='git cm'
 alias gca='git ca'
 alias gam='git cam'
+alias gmd='git amd'
 alias gdf='git diff'
+alias gdc='git diff --cached'
 alias gco='git co'
 alias gsh='git sh'
+alias epg='pg'
 
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -36,9 +42,17 @@ alias ..6='cd ../../../../../..'
 alias c..='cl ..'
 alias c...='cl ../..'
 
+alias vrnd='rnd vi'
+alias clnd='rnd cl'
+alias pgnd='rnd pg'
+alias icnd='rnd ic .pdf'
+alias prnd='rnd python .py'
+
 # Functional alias
+function pg { printf `greadlink -f $1` | clip; }
 function lg { ls -l | grep "$*" | col 9 | xargs echo; }
 function ucp { scp -r uaf:$1 . ; }
+function bcp { scp -r t2b:$1 . ; }
 
 function mkcd { mkdir -p "$1" && cd "$1"; }
 function mkcp { mkdir -p ${!#} && cpcd $@; }
@@ -60,7 +74,7 @@ function rnd {
     fi
     if [[ $rndf != "" ]]; then
         echo "$1 $rndf"
-        $1 $rndf
+        eval $1 $rndf
         history -s "$1 $rndf"
     else
         echo "Fail to find any random file."
@@ -113,8 +127,17 @@ function gcl {
     if [ ! -z $2 ]; then
         git clone $@ && cl $2
     else
-        git clone "$1" && cl $(basename "$1" ".git")
+        git clone --recurse-submodules "$1" && cl $(basename "$1" ".git")
     fi
+}
+
+function gcp {
+    local url=$1
+    if [[ $url == "https://github.com/"*  ]]; then
+        url=${url/"https://github.com/"/"https://raw.githubusercontent.com/"}
+    fi
+    echo curl -O $url
+    curl -O $url
 }
 
 function kajobs {
@@ -133,6 +156,17 @@ function mkc {
     fi
 }
 
+function dscp {
+    # Double scp
+    local srcf=$1
+    local desf=$2
+    local srch=${3:-"hig"}
+    local desh=${4:-"hcx1"}
+    scp -r $srch:$srcf ~/play/temp/ || return
+    local fn=$(basename $srcf)
+    scp -r ~/play/temp/$fn $desh:$desf || return
+}
+
 function web {
     local fname=$(basename $1)
     local des=${2:-"slides"}
@@ -140,11 +174,15 @@ function web {
     if [[ $machine == "uaf" ]]; then
         scp -r $1 uaf:~/public_html/$des
         local addr="http://uaf-8.t2.ucsd.edu/~${SSH_USER}/$des/$fname"
+    elif [[ $machine == "ucsb" ]]; then
+        scp -r $1 tau:~/htdoc/share/$des
+        local addr="http://hep.ucsb.edu/people/${SSH_USER}/share/$des/$fname"
     elif [[ $machine == "lxplus" ]] || [[ $machine == "cern" ]]; then
         scp -r $1 lxplus:~/www/share/$des
         local addr="http://${SSH_USER}.web.cern.ch/${SSH_USER}/share/$des/$fname"
     fi
     echo "Posted online at $addr"
+    echo $addr | clip
 }
 
 function col {
@@ -158,16 +196,9 @@ function col {
     fi
 }
 
-function pg {
-    local fname=$(basename $1)
-    echo `pwd $1`/$fname | clip
-}
-
 function clip {
     # Escape sequence for iTerm
     read foo
     echo -e "\033]1337;CopyToClipboard=;\a$foo\033]1337;EndCopy\a"
 }
 
-# Enable C-s for isearch-forward
-stty -ixon
